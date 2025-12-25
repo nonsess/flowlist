@@ -59,8 +59,11 @@ docker-compose up --build
 ```
 
 Фронтенд (Next.js): клиентская логика, React Context для состояния, прямые запросы к API.
+
 Бэкенд (FastAPI): REST API, аутентификация через JWT, асинхронная работа с БД.
+
 База данных: PostgreSQL с отношениями user → tasks.
+
 Инфраструктура: всё в Docker - один docker-compose.yml управляет всем стеком.
 
 ---
