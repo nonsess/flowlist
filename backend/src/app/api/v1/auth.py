@@ -1,24 +1,40 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 
-from src.app.schemas.user import UserRead, UserRegister, UserLogin, Token
-from src.app.core.deps import get_current_user, get_user_repository
+from src.app.schemas.task import TaskCreate
+from src.app.repositories.task import TaskRepository
 from src.app.repositories.user import UserRepository
 from src.app.core.security import verify_password, create_access_token
+from src.app.schemas.user import UserRead, UserRegister, UserLogin, Token
+from src.app.core.deps import get_current_user, get_user_repository, get_task_repository
 
 
 router = APIRouter()
+
+async def add_welcome_task(
+    user_id: int,
+    task_repository: TaskRepository
+) -> None:
+    await task_repository.create(TaskCreate(
+        title="Добро пожаловать в Flowlist",
+        description="Здесь ты можешь управлять своими задачами"
+    ), user_id)
 
 @router.post("/register", response_model=Token)
 async def register(
     user_in: UserRegister,
     user_repository: Annotated[UserRepository, Depends(get_user_repository)],
+    task_repository: Annotated[TaskRepository, Depends(get_task_repository)],
+    background_tasks: BackgroundTasks
 ):
     existing = await user_repository.get_by_username(user_in.username)
     if existing:
         raise HTTPException(status_code=400, detail="Username already taken")
     
     user = await user_repository.create(user_in.username, user_in.password)
+
+    background_tasks.add_task(add_welcome_task, user.id, task_repository)
+
     access_token = create_access_token(user.id)
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -33,7 +49,6 @@ async def login(
     
     access_token = create_access_token(user.id)
     return {"access_token": access_token, "token_type": "bearer"}
-
 
 @router.get("/me", response_model=UserRead)
 async def read_users_me(current_user: Annotated[UserRead, Depends(get_current_user)]):
