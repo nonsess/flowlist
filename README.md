@@ -27,7 +27,7 @@
 
 ### 1. Клонируй репозиторий
 ```bash
-git clone https://github.com/petrovdanil/flowlist.git
+git clone https://github.com/nonsess/flowlist.git
 cd flowlist
 ```
 
