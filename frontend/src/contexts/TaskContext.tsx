@@ -13,7 +13,7 @@ type TaskState = {
 
 type TaskContextType = TaskState & {
   refetch: () => Promise<void>;
-  createTask: (title: string) => Promise<void>;
+  createTask: (title: string, description: string | null) => Promise<void>;
   updateTask: (id: string, data: Partial<Task>) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   toggleTask: (id: string) => Promise<void>;
@@ -57,9 +57,9 @@ export function TaskProvider({ children }: { children: ReactNode }) {
     }
   }, [authLoading, token, loadTasks]);
 
-  const createTask = async (title: string) => {
+  const createTask = async (title: string, description: string | null) => {
     try {
-      const newTask = await tasksApi.create(title);
+      const newTask = await tasksApi.create(title, description);
       setState(prev => ({
         ...prev,
         tasks: [newTask, ...prev.tasks],
