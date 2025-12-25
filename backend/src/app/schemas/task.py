@@ -4,8 +4,8 @@ from uuid import UUID
 from datetime import datetime
 
 class TaskBase(BaseModel):
-    title: str = Field(..., min_length=1, max_length=255, description="Task title")
-    description: Optional[str] = Field(None, max_length=1000, description="Optional task description")
+    title: str = Field(..., min_length=1, max_length=60, description="Task title")
+    description: Optional[str] = Field(None, max_length=150, description="Optional task description")
 
 
 class TaskCreate(TaskBase):
@@ -15,8 +15,8 @@ class TaskCreate(TaskBase):
 
 class TaskUpdate(TaskBase):
     """Schema for updating a task — все поля опциональны"""
-    title: Optional[str] = Field(None, min_length=1, max_length=255)
-    description: Optional[str] = Field(None, max_length=1000)
+    title: Optional[str] = Field(None, min_length=1, max_length=60)
+    description: Optional[str] = Field(None, max_length=150)
     completed: Optional[bool] = None
 
 
