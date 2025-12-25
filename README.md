@@ -27,7 +27,7 @@
 
 ### 1. Клонируй репозиторий
 ```bash
-git clone https://github.com/nonsess/flowlist.git
+git clone https://github.com/petrovdanil/flowlist.git
 cd flowlist
 ```
 
@@ -49,12 +49,14 @@ docker-compose up --build
 
 ## 🏗️ Архитектура
 
+```
 ┌─────────────┐     HTTP     ┌─────────────┐     Asyncpg      ┌──────────────┐
 │             │◄────────────►│             │◄────────────────►│              │
 │   Next.js   │   (CORS)     │   FastAPI   │   (SQLAlchemy)   │  PostgreSQL  │
 │  (Frontend) │              │  (Backend)  │                  │    (DB)      │
 │             │─────────────►│             │                  │              │
 └─────────────┘   JWT Auth   └─────────────┘                  └──────────────┘
+```
 
 Фронтенд (Next.js): клиентская логика, React Context для состояния, прямые запросы к API.
 Бэкенд (FastAPI): REST API, аутентификация через JWT, асинхронная работа с БД.
