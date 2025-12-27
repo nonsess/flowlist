@@ -16,7 +16,7 @@
 
 | Десктопная версия | Мобильная версия |
 |-------------------|------------------|
-| ![Десктоп](<https://github.com/user-attachments/assets/1c78f7fe-732e-4385-a42e-2ee28459e588>) | ![Мобилка](<https://github.com/user-attachments/assets/bd6fd03d-5e39-4b64-b94a-35cf22cd9b5d>) |
+| ![Десктоп](<https://github.com/nonsess/flowlist/raw/main/docs/desktop.png>) | ![Мобилка](<https://github.com/nonsess/flowlist/raw/main/docs/mobile.png>) |
 
 ---
 
